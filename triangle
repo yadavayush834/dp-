@@ -1,0 +1,48 @@
+// brute force
+class Solution {
+public:
+    int solve(vector<vector<int>>& triangle,int row,int col){
+        if(row == triangle.size()-1){
+            return triangle[row][col];
+        }
+        int down = solve(triangle,row+1,col);
+        int diag = solve(triangle,row+1,col+1);
+        return triangle[row][col]+min(down,diag);
+    }
+    int minimumTotal(vector<vector<int>>& triangle) {
+        return solve(triangle,0,0);
+        
+    }
+};
+
+
+
+// optimize
+
+class Solution {
+public:
+    int solve(vector<vector<int>>&dp,vector<vector<int>>&triangle,int row,int col){
+        if(row == triangle.size()-1){
+            return triangle[row][col];
+        }
+        if(dp[row][col] != -1){
+            return dp[row][col];
+        }
+        int down = solve(dp,triangle,row+1,col);
+        int diag = solve(dp,triangle,row+1,col+1);
+        return dp[row][col] = triangle[row][col] + min(down,diag);
+    }
+    int minimumTotal(vector<vector<int>>& triangle) {
+        int n = triangle.size()-1;
+        vector<vector<int>>dp(n,vector<int>(n,-1));
+        return solve(dp,triangle,0,0);
+    }
+};
+
+
+
+
+
+// more optimize
+
+
